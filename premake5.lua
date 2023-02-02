@@ -1,6 +1,7 @@
 workspace "RTS3D_RETAKE"
     configurations { "Debug", "Release" }
     startproject "RTS3D"
+    architecture "x64"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
@@ -53,7 +54,7 @@ project "RTS3D"
     filter "system:windows"
         system "windows"
         systemversion "latest"
-        architecture "x86_64"
+        architecture "x64"
 
         links {
             "opengl32"
