@@ -1,7 +1,5 @@
 workspace "RTS3D_RETAKE"
     configurations { "Debug", "Release" }
-    architecture "x64"
-    system "windows"
     startproject "RTS3D"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
@@ -19,9 +17,6 @@ project "RTS3D"
     kind "ConsoleApp"
     language "C++"
     cppdialect "C++20"
-
-    targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("%{wks.location}/obj/" .. outputdir .. "/%{prj.name}")
 
     files {
         "%{prj.name}/**.h",
@@ -41,8 +36,8 @@ project "RTS3D"
         "GLFW",
         "GLAD",
         "glm",
-	"ImGui",
-	"stb",
+	    "ImGui",
+	    "stb",
     }
 
     defines {}
@@ -69,6 +64,16 @@ project "RTS3D"
     filter "system:linux"
         system "linux"
         architecture "ARM"
+
+        links {
+            "dl",
+            "pthread",
+            "X11",
+            "EGL",
+            "GLESv2",
+            "Xrandr",
+            "Xcursor",
+        }
         
         defines {
             "_PLATFORM_RASPBERRY",

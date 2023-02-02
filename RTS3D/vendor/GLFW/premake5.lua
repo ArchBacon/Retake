@@ -2,10 +2,7 @@ project "GLFW"
     kind "StaticLib"
     language "C"
     staticruntime "On"
-
-    targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
-
+    
     files {
         "include/GLFW/glfw3.h",
         "include/GLFW/glfw3native.h",
@@ -38,6 +35,7 @@ project "GLFW"
             "src/posix_time.c",
             "src/posix_thread.c",
             "src/posix_module.c",
+            "src/posix_poll.c",
             "src/glx_context.c",
             "src/egl_context.c",
             "src/osmesa_context.c",
@@ -61,7 +59,7 @@ project "GLFW"
             "src/win32_window.c",
             "src/wgl_context.c",
             "src/egl_context.c",
-            "src/osmesa_context.c"
+            "src/osmesa_context.c",
         }
         
         defines {
@@ -71,6 +69,13 @@ project "GLFW"
         
         links {
             "Dwmapi.lib"
+        }
+
+    filter "system:linux"
+        systemversion "latest"
+
+        links {
+            "X11",
         }
     
 	filter "configurations:Debug"
