@@ -1,0 +1,9 @@
+/.idea
+/.vs
+
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
+bin/
+obj/
