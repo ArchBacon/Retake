@@ -1,9 +1,9 @@
-/.idea
-/.vs
+.idea
+.vs
 
 *.sln
 *.vcxproj
 *.vcxproj.filters
 
-bin/
-obj/
+**/bin/
+**/obj/
