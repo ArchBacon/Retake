@@ -11,14 +11,14 @@
  */
 class VAO
 {
-    GLuint id;
+    GLuint id = -1;
     
 public:
     VAO();
 
-    void LinkVBO(VBO& vbo, GLuint layout);
+    void LinkVBO(VBO& VBO, GLuint layout) const;
     
-    void Bind();
-    void Unbind();
-    void Delete();
+    void Bind() const;
+    void Unbind() const;
+    void Delete() const;
 };

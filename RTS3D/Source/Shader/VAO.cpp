@@ -5,25 +5,25 @@ VAO::VAO()
     glGenVertexArrays(1, &id);
 }
 
-void VAO::LinkVBO(VBO& vbo, GLuint layout)
+void VAO::LinkVBO(VBO& VBO, const GLuint layout) const
 {
-    vbo.Bind();
+    VBO.Bind();
     glVertexAttribPointer(layout, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     glEnableVertexAttribArray(layout);
-    vbo.Unbind();
+    VBO.Unbind();
 }
 
-void VAO::Bind()
+void VAO::Bind() const
 {
     glBindVertexArray(id);
 }
 
-void VAO::Unbind()
+void VAO::Unbind() const
 {
     glBindVertexArray(0);
 }
 
-void VAO::Delete()
+void VAO::Delete() const
 {
     glDeleteVertexArrays(1, &id);
 }

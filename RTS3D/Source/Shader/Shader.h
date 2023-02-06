@@ -12,6 +12,6 @@ class Shader
 public:
     Shader(const char* vertexFile, const char* fragmentFile);
 
-    void Active();
-    void Delete();
+    void Active() const;
+    void Delete() const;
 };

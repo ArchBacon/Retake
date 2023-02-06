@@ -30,8 +30,8 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile)
 
     const std::string shaderPath = "Resource/Shader/";
     
-    std::string vertexCode = GetFileContents(FileResolver::Resolve(shaderPath + vertexFile).c_str());
-    std::string fragmentCode = GetFileContents(FileResolver::Resolve(shaderPath + fragmentFile).c_str());
+    const std::string vertexCode = GetFileContents(FileResolver::Resolve((shaderPath + vertexFile).c_str()).c_str());
+    const std::string fragmentCode = GetFileContents(FileResolver::Resolve((shaderPath + fragmentFile).c_str()).c_str());
 
     const char* vertexSource = vertexCode.c_str();
     const char* fragmentSource = fragmentCode.c_str();
@@ -77,12 +77,12 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile)
     glDeleteShader(fragmentShader);
 }
 
-void Shader::Active()
+void Shader::Active() const
 {
     glUseProgram(id);
 }
 
-void Shader::Delete()
+void Shader::Delete() const
 {
     glDeleteProgram(id);
 }

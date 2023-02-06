@@ -85,12 +85,15 @@ int main(int argc, char* argv[])
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT);
+        
+        //---------- RENDER BEGIN ----------//
         shaderProgram.Active();
         
         VAO1.Bind();
         glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
-        glfwSwapBuffers(window);
+        //---------- RENDER END ----------//
         
+        glfwSwapBuffers(window);
         glfwPollEvents();
     }
 

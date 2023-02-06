@@ -7,12 +7,12 @@
  */
 class EBO
 {
-    GLuint id;
+    GLuint id = -1;
     
 public:
-    EBO(GLuint* indices, GLsizeiptr size);
+    EBO(const GLuint* indices, GLsizeiptr size);
 
-    void Bind();
-    void Unbind();
-    void Delete();
+    void Bind() const;
+    void Unbind() const;
+    void Delete() const;
 };
