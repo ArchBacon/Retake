@@ -6,11 +6,11 @@ workspace "RTS3D_RETAKE"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 group "Dependencies"
-    include "RTS3D/vendor/GLFW"
-    include "RTS3D/vendor/GLAD"
-    include "RTS3D/vendor/glm"
-    include "RTS3D/vendor/imgui"
-    include "RTS3D/vendor/stb"
+    include "RTS3D/Vendor/GLFW"
+    include "RTS3D/Vendor/GLAD"
+    include "RTS3D/Vendor/glm"
+    include "RTS3D/Vendor/imgui"
+    include "RTS3D/Vendor/stb"
 group ""
 
 project "RTS3D"
@@ -20,17 +20,18 @@ project "RTS3D"
     cppdialect "C++20"
 
     files {
+        "%{prj.name}/Resource/**",
         "%{prj.name}/**.h",
         "%{prj.name}/**.cpp",
     }
 
     includedirs {
-        "%{prj.name}/source",
-        "%{prj.name}/vendor/GLFW/include",
-        "%{prj.name}/vendor/GLAD/include",
-        "%{prj.name}/vendor/glm",
-        "%{prj.name}/vendor/imgui",
-	    "%{prj.name}/vendor/stb",
+        "%{prj.name}/Source",
+        "%{prj.name}/Vendor/GLFW/include",
+        "%{prj.name}/Vendor/GLAD/include",
+        "%{prj.name}/Vendor/glm",
+        "%{prj.name}/Vendor/imgui",
+	    "%{prj.name}/Vendor/stb",
     }
 
     links {
