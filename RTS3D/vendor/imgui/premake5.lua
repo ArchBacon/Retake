@@ -12,8 +12,8 @@ project "ImGui"
 
     includedirs {
 		"",
-        "%{wks.location}/RTS3D/vendor/GLFW/include",
-        "%{wks.location}/RTS3D/vendor/GLAD/include",
+        "%{wks.location}/RTS3D/Vendor/GLFW/include",
+        "%{wks.location}/RTS3D/Vendor/GLAD/include",
     }
 
     links {
