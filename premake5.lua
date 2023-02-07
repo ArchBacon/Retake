@@ -10,7 +10,6 @@ group "Dependencies"
     include "RTS3D/Vendor/GLAD"
     include "RTS3D/Vendor/glm"
     include "RTS3D/Vendor/imgui"
-    include "RTS3D/Vendor/stb"
 group ""
 
 project "RTS3D"
@@ -31,7 +30,6 @@ project "RTS3D"
         "%{prj.name}/Vendor/GLAD/include",
         "%{prj.name}/Vendor/glm",
         "%{prj.name}/Vendor/imgui",
-	    "%{prj.name}/Vendor/stb",
     }
 
     links {
@@ -39,7 +37,6 @@ project "RTS3D"
         "GLAD",
         "glm",
 	    "ImGui",
-	    "stb",
     }
 
     defines {}

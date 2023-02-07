@@ -1,27 +1,12 @@
 #include <iostream>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#define STB_IMAGE_IMPLEMENTATION
-#include <stb/stb_image.h>
 
 #include "Shader/EBO.h"
 #include "Shader/Shader.h"
 #include "Shader/VAO.h"
-
-// Vertex Shader source code
-const char* vertexShaderSource = "#version 330 core\n"
-    "layout (location = 0) in vec3 aPos;\n"
-    "void main()\n"
-    "{\n"
-    "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-    "}\0";
-// Fragment Shader source code
-const char* fragmentShaderSource = "#version 330 core\n"
-    "out vec4 FragColor;\n"
-    "void main()\n"
-    "{\n"
-    "   FragColor = vec4(0.8f, 0.3f, 0.02f, 1.0f);\n"
-    "}\n\0";
+#include "Shader/VBO.h"
+#include "Texture/Texture.h"
 
 int main(int argc, char* argv[])
 {
@@ -61,7 +46,7 @@ int main(int argc, char* argv[])
     glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 
     //---------- SHADERS BEGIN ----------//
-    Shader shaderProgram("default.vert", "default.frag");
+    const Shader shaderProgram("default.vert", "default.frag");
     //---------- SHADERS END ----------//
 
     //---------- OBJECTS BEGIN ----------//
@@ -83,33 +68,11 @@ int main(int argc, char* argv[])
     //---------- OBJECTS END ----------//
 
     //---------- TEXTURE BEGIN ----------//
-    int imgWidth, imgHeight, colorChannels;
-    stbi_set_flip_vertically_on_load(true);
-    unsigned char* bytes = stbi_load("Resource/Texture/JDM_Car.png", &imgWidth, &imgHeight, &colorChannels, 4);
-    
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, texture);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-    
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-    
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgWidth, imgHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
-    glGenerateMipmap(GL_TEXTURE_2D);
-    
-    stbi_image_free(bytes);
-    glBindTexture(GL_TEXTURE_2D, 0);
-    
-    GLuint tex0uni = glGetUniformLocation(shaderProgram.GetId(), "tex0");
-    shaderProgram.Active();
-    glUniform1i(tex0uni, 0);
+    Texture carTexture("JDM_Car.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+    carTexture.Apply(shaderProgram, "tex0", 0);
     //---------- TEXTURE END ----------//
 
-    GLuint uniID = glGetUniformLocation(shaderProgram.GetId(), "scale");
+    const GLint uniId = glGetUniformLocation(shaderProgram.GetId(), "scale");
 
     while (!glfwWindowShouldClose(window))
     {
@@ -117,8 +80,8 @@ int main(int argc, char* argv[])
         glfwPollEvents();
         
         shaderProgram.Active();
-        glUniform1f(uniID, 1.0f);
-        glBindTexture(GL_TEXTURE_2D, texture);
+        glUniform1f(uniId, 1.0f);
+        carTexture.Bind();
         
         //---------- RENDER BEGIN ----------//
         VAO1.Bind();
@@ -131,7 +94,7 @@ int main(int argc, char* argv[])
     VAO1.Delete();
     VBO1.Delete();
     EBO1.Delete();
-    glDeleteTextures(1, &texture);
+    carTexture.Delete();
     shaderProgram.Delete();
     
     glfwDestroyWindow(window);

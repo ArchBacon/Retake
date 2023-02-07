@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 
+#include "Utility/Common.h"
 #include "Utility/FileResolver.h"
 
 std::string GetFileContents(const char* filename)
@@ -28,10 +29,8 @@ Shader::Shader(const char* vertexFile, const char* fragmentFile)
     int success;
     char infoLog[1024];
 
-    const std::string shaderPath = "Resource/Shader/";
-    
-    const std::string vertexCode = GetFileContents(FileResolver::Resolve((shaderPath + vertexFile).c_str()).c_str());
-    const std::string fragmentCode = GetFileContents(FileResolver::Resolve((shaderPath + fragmentFile).c_str()).c_str());
+    const std::string vertexCode = GetFileContents(FileResolver::Resolve((PATH::SHADER + vertexFile).c_str()).c_str());
+    const std::string fragmentCode = GetFileContents(FileResolver::Resolve((PATH::SHADER + fragmentFile).c_str()).c_str());
 
     const char* vertexSource = vertexCode.c_str();
     const char* fragmentSource = fragmentCode.c_str();

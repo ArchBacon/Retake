@@ -1,7 +1,8 @@
 #pragma once
 
 #include <glad/glad.h>
-#include "VBO.h"
+
+class VBO;
 
 /**
  * @see https://www.khronos.org/opengl/wiki/Vertex_Specification#:~:text=A%20Vertex%20Array%20Object%20(VAO,providing%20the%20vertex%20data%20arrays. 
@@ -16,7 +17,7 @@ class VAO
 public:
     VAO();
 
-    void LinkAttrib(VBO& VBO, GLuint layout, GLuint numComponents, GLenum type, GLsizeiptr stride, void* offset) const;
+    void LinkAttrib(const VBO& VBO, GLuint layout, GLint numComponents, GLenum type, GLsizei stride, const void* offset) const;
     
     void Bind() const;
     void Unbind() const;
