@@ -4,7 +4,6 @@ project "stb"
 	staticruntime "On"
 
 	files {
-		"stb.cpp",
 		"stb/stb_image.h",
 	}
 	includedirs { "" }
