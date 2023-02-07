@@ -85,7 +85,7 @@ int main(int argc, char* argv[])
     //---------- TEXTURE BEGIN ----------//
     int imgWidth, imgHeight, colorChannels;
     stbi_set_flip_vertically_on_load(true);
-    unsigned char* bytes = stbi_load("Resource/Texture/JDM_Car.png", &imgWidth, &imgHeight, &colorChannels, 0);
+    unsigned char* bytes = stbi_load("Resource/Texture/JDM_Car.png", &imgWidth, &imgHeight, &colorChannels, 4);
     
     GLuint texture;
     glGenTextures(1, &texture);
