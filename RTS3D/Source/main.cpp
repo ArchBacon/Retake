@@ -74,10 +74,39 @@ int main(int argc, char* argv[])
     VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
     /** Define Vertices color */
     VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
+    /** Define Vertices texture coordinates */
+    VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
     VAO1.Unbind();
     VBO1.Unbind();
     EBO1.Unbind();
     //---------- OBJECTS END ----------//
+
+    //---------- TEXTURE BEGIN ----------//
+    int imgWidth, imgHeight, colorChannels;
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char* bytes = stbi_load("Resource/Texture/JDM_Car.png", &imgWidth, &imgHeight, &colorChannels, 0);
+    
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imgWidth, imgHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    
+    stbi_image_free(bytes);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    
+    GLuint tex0uni = glGetUniformLocation(shaderProgram.GetId(), "tex0");
+    shaderProgram.Active();
+    glUniform1i(tex0uni, 0);
+    //---------- TEXTURE END ----------//
 
     GLuint uniID = glGetUniformLocation(shaderProgram.GetId(), "scale");
 
@@ -88,6 +117,7 @@ int main(int argc, char* argv[])
         
         shaderProgram.Active();
         glUniform1f(uniID, 1.0f);
+        glBindTexture(GL_TEXTURE_2D, texture);
         
         //---------- RENDER BEGIN ----------//
         VAO1.Bind();
@@ -100,6 +130,7 @@ int main(int argc, char* argv[])
     VAO1.Delete();
     VBO1.Delete();
     EBO1.Delete();
+    glDeleteTextures(1, &texture);
     shaderProgram.Delete();
     
     glfwDestroyWindow(window);
