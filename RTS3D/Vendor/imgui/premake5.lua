@@ -6,8 +6,6 @@ project "ImGui"
 	files {
         "**.h",
         "**.cpp",
-		"imgui/imgui_impl_glfw.cpp",
-		"imgui/imgui_impl_opengl3.cpp",
 	}
 
     includedirs {
