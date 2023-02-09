@@ -58,7 +58,10 @@ project "RTS3D"
             "opengl32"
         }
 
-        defines { "_PLATFORM_WINDOWS" }
+        defines {
+            "_PLATFORM_WINDOWS",
+            "GLFW_INCLUDE_NONE",
+        }
 
     filter "system:linux"
         system "linux"

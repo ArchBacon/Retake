@@ -1,5 +1,6 @@
 #pragma once
 
+#include <GLFW/glfw3.h>
 #include "glm/vec3.hpp"
 
 class Shader;
@@ -13,7 +14,7 @@ class Camera
     int width;
     int height;
 
-    float speed = 0.1f;
+    float speed = 0.01f;
     float sensitivity = 100.0f;
     
 public:
@@ -21,5 +22,5 @@ public:
 
     // Send stuff to shader
     void Matrix(float FOV, float nearPlane, float farPlane, Shader& shader, const char* uniform);
-    void Inputs();
+    void Inputs(GLFWwindow* window);
 };
