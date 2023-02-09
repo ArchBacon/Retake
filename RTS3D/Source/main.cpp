@@ -2,6 +2,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.inl"
+#include "glm/gtx/transform.hpp"
 #include "Shader/EBO.h"
 #include "Shader/Shader.h"
 #include "Shader/VAO.h"
@@ -19,20 +22,26 @@ int main(int argc, char* argv[])
     // Vertices coordinates
     GLfloat vertices[] =
     { //     COORDINATES     /        COLORS      /   TexCoord  //
-        -0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
-        -0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,	0.0f, 1.0f, // Upper left corner
-         0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,	1.0f, 1.0f, // Upper right corner
-         0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,	1.0f, 0.0f  // Lower right corner
+        -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
+        -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	1.0f, 0.0f,
+         0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	0.0f, 0.0f,
+         0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	1.0f, 0.0f,
+         0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	0.5f, 1.0f
     };
 
     // Indices for vertices order
     GLuint indices[] =
     {
-        0, 2, 1, // Upper triangle
-        0, 3, 2 // Lower triangle
+        0, 1, 2,
+        0, 2, 3,
+        0, 1, 4,
+        1, 2, 4,
+        2, 3, 4,
+        3, 0, 4
     };
 
-    GLFWwindow* window = glfwCreateWindow(800, 800, "Hello Triangle", nullptr, nullptr);
+    int width = 800, height = 800;
+    GLFWwindow* window = glfwCreateWindow(width, height, "Hello Triangle", nullptr, nullptr);
     if (window == nullptr)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -42,8 +51,9 @@ int main(int argc, char* argv[])
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1); // Enable vsync
     gladLoadGL();
-    glViewport(0, 0, 800, 800);
+    glViewport(0, 0, width, height);
     glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+    glEnable(GL_DEPTH_TEST);
 
     //---------- SHADERS BEGIN ----------//
     const Shader shaderProgram("default.vert", "default.frag");
@@ -72,20 +82,52 @@ int main(int argc, char* argv[])
     carTexture.Apply(shaderProgram, "tex0", 0);
     //---------- TEXTURE END ----------//
 
-    const GLint uniId = glGetUniformLocation(shaderProgram.GetId(), "scale");
+    //---------- TIMER BEGIN ----------//
+    float rotation = 0.0f;
+    double prevTime = glfwGetTime();
+    //---------- TIMER END ----------//
+
+    const GLint scaleUniform = glGetUniformLocation(shaderProgram.GetId(), "scale");
+    const GLint modelUniform = glGetUniformLocation(shaderProgram.GetId(), "model");
+    const GLint viewUniform = glGetUniformLocation(shaderProgram.GetId(), "view");
+    const GLint projUniform = glGetUniformLocation(shaderProgram.GetId(), "proj");
 
     while (!glfwWindowShouldClose(window))
     {
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         glfwPollEvents();
         
         shaderProgram.Active();
-        glUniform1f(uniId, 1.0f);
+
+        //---------- TIMER BEGIN ----------//
+        double crntTime = glfwGetTime();
+        if (crntTime - prevTime >= 1 / 60)
+        {
+            rotation += 0.5f;
+            prevTime = crntTime;
+        }
+        //---------- TIMER END ----------//
+
+        //---------- CAMERA BEGIN ----------//
+        glm::mat4 model = glm::mat4(1.0f);
+        glm::mat4 view = glm::mat4(1.0f);
+        glm::mat4 proj = glm::mat4(1.0f);
+        /**       rotate what?      |   rotate by how much?     |       rotate on what axis?   */
+        model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
+        view = glm::translate(view, glm::vec3(0.0f, -0.3f, -2.0f));
+        proj = glm::perspective(glm::radians(45.0f), (float)(width/height), 0.1f, 100.f);
+
+        glUniformMatrix4fv(modelUniform, 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(viewUniform, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(projUniform, 1, GL_FALSE, glm::value_ptr(proj));
+        //---------- CAMERA END ----------//
+        
+        glUniform1f(scaleUniform, 1.0f);
         carTexture.Bind();
         
         //---------- RENDER BEGIN ----------//
         VAO1.Bind();
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
         //---------- RENDER END ----------//
         
         glfwSwapBuffers(window);
