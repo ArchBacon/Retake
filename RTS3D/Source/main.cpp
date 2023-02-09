@@ -2,6 +2,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "Camera/Camera.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/type_ptr.inl"
 #include "glm/gtx/transform.hpp"
@@ -56,7 +57,7 @@ int main(int argc, char* argv[])
     glEnable(GL_DEPTH_TEST);
 
     //---------- SHADERS BEGIN ----------//
-    const Shader shaderProgram("default.vert", "default.frag");
+    Shader shaderProgram("default.vert", "default.frag");
     //---------- SHADERS END ----------//
 
     //---------- OBJECTS BEGIN ----------//
@@ -81,17 +82,9 @@ int main(int argc, char* argv[])
     Texture carTexture("JDM_Car.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
     carTexture.Apply(shaderProgram, "tex0", 0);
     //---------- TEXTURE END ----------//
-
-    //---------- TIMER BEGIN ----------//
-    float rotation = 0.0f;
-    double prevTime = glfwGetTime();
-    //---------- TIMER END ----------//
-
-    const GLint scaleUniform = glGetUniformLocation(shaderProgram.GetId(), "scale");
-    const GLint modelUniform = glGetUniformLocation(shaderProgram.GetId(), "model");
-    const GLint viewUniform = glGetUniformLocation(shaderProgram.GetId(), "view");
-    const GLint projUniform = glGetUniformLocation(shaderProgram.GetId(), "proj");
-
+    
+    Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
+    
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -99,30 +92,8 @@ int main(int argc, char* argv[])
         
         shaderProgram.Active();
 
-        //---------- TIMER BEGIN ----------//
-        double crntTime = glfwGetTime();
-        if (crntTime - prevTime >= 1 / 60)
-        {
-            rotation += 0.5f;
-            prevTime = crntTime;
-        }
-        //---------- TIMER END ----------//
-
-        //---------- CAMERA BEGIN ----------//
-        glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 view = glm::mat4(1.0f);
-        glm::mat4 proj = glm::mat4(1.0f);
-        /**       rotate what?      |   rotate by how much?     |       rotate on what axis?   */
-        model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0f, 1.0f, 0.0f));
-        view = glm::translate(view, glm::vec3(0.0f, -0.3f, -2.0f));
-        proj = glm::perspective(glm::radians(45.0f), (float)(width/height), 0.1f, 100.f);
-
-        glUniformMatrix4fv(modelUniform, 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(viewUniform, 1, GL_FALSE, glm::value_ptr(view));
-        glUniformMatrix4fv(projUniform, 1, GL_FALSE, glm::value_ptr(proj));
-        //---------- CAMERA END ----------//
+        camera.Matrix(45.0f, 0.1f, 100.0f, shaderProgram, "camMatrix");
         
-        glUniform1f(scaleUniform, 1.0f);
         carTexture.Bind();
         
         //---------- RENDER BEGIN ----------//
