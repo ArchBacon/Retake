@@ -1,7 +1,8 @@
 #include "Camera.h"
 
 #include <glad/glad.h>
-#include "glm/mat4x4.hpp"
+#include <glm/gtx/rotate_vector.hpp>
+#include <glm/gtx/vector_angle.hpp>
 #include "glm/ext/matrix_clip_space.hpp"
 #include "glm/ext/matrix_transform.hpp"
 #include "glm/gtc/type_ptr.hpp"
@@ -24,6 +25,7 @@ void Camera::Matrix(float FOV, float nearPlane, float farPlane, Shader& shader, 
 
 void Camera::Inputs(GLFWwindow* window)
 {
+    //---------- KEYBOARD INPUTS ----------//
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
     {
         position += speed * orientation;
@@ -56,5 +58,37 @@ void Camera::Inputs(GLFWwindow* window)
     else if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_RELEASE)
     {
         speed = 0.01f;
+    }
+
+    //---------- MOUSE INPUTS ----------//
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS)
+    {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        if (firstClick)
+        {
+            glfwSetCursorPos(window, width / 2.0, height / 2.0);
+            firstClick = false;
+        }
+        
+        double mouseX, mouseY;
+        glfwGetCursorPos(window, &mouseX, &mouseY);
+
+        float rotX = sensitivity * (float)(mouseY - (height / 2.0)) / height;
+        float rotY = sensitivity * (float)(mouseX - (width / 2.0)) / width;
+
+        glm::vec3 newOrientation = glm::rotate(orientation, glm::radians(-rotX), glm::normalize(glm::cross(orientation, up)));
+        if (abs(glm::angle(newOrientation, up) - glm::radians(90.0f)) <= glm::radians(85.0f))
+        {
+            orientation = newOrientation;
+        }
+
+        orientation = glm::rotate(orientation, glm::radians(-rotY), up);
+
+        glfwSetCursorPos(window, width / 2.0, height / 2.0);
+    }
+    else if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_RELEASE)
+    {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        firstClick = true;
     }
 }
