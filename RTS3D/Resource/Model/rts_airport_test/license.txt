@@ -1,0 +1,11 @@
+Model Information:
+* title:	RTS Airport (Test)
+* source:	https://sketchfab.com/3d-models/rts-airport-test-3ec617cffe8c4e12b1057874a108f9a6
+* author:	Sabri Ayeş (https://sketchfab.com/sabriayes)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "RTS Airport (Test)" (https://sketchfab.com/3d-models/rts-airport-test-3ec617cffe8c4e12b1057874a108f9a6) by Sabri Ayeş (https://sketchfab.com/sabriayes) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

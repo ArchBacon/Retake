@@ -1,0 +1,11 @@
+Model Information:
+* title:	RTS Radar Tower
+* source:	https://sketchfab.com/3d-models/rts-radar-tower-8f57ca27d2f24ae1b73986f132edede6
+* author:	Sabri Ayeş (https://sketchfab.com/sabriayes)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "RTS Radar Tower" (https://sketchfab.com/3d-models/rts-radar-tower-8f57ca27d2f24ae1b73986f132edede6) by Sabri Ayeş (https://sketchfab.com/sabriayes) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

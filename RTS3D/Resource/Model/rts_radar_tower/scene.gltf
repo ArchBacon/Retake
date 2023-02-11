@@ -1,0 +1,502 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 220,
+      "max": [
+        4.764898300170898,
+        20.011093139648438,
+        12.62179946899414
+      ],
+      "min": [
+        -8.749101638793945,
+        -0.01790618896484375,
+        -12.62190055847168
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 2640,
+      "componentType": 5126,
+      "count": 220,
+      "max": [
+        0.9999921917915344,
+        0.993995189666748,
+        1.0
+      ],
+      "min": [
+        -0.9999921321868896,
+        -0.9999861717224121,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 220,
+      "max": [
+        0.9999861121177673,
+        0.9999921321868896,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -0.9938849210739136,
+        -0.9999921917915344,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 220,
+      "max": [
+        0.5732988119125366,
+        0.38729551434516907
+      ],
+      "min": [
+        0.02670152299106121,
+        0.019138336181640625
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 432,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 5280,
+      "componentType": 5126,
+      "count": 1250,
+      "max": [
+        36.76969909667969,
+        54.11690139770508,
+        22.48579978942871
+      ],
+      "min": [
+        -36.76969909667969,
+        0.0,
+        -22.48579978942871
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 20280,
+      "componentType": 5126,
+      "count": 1250,
+      "max": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 3520,
+      "componentType": 5126,
+      "count": 1250,
+      "max": [
+        1.0,
+        1.0,
+        1.0,
+        1.0
+      ],
+      "min": [
+        -1.0,
+        -1.0,
+        -1.0,
+        -1.0
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 1760,
+      "componentType": 5126,
+      "count": 1250,
+      "max": [
+        0.9853935837745667,
+        0.9846255779266357
+      ],
+      "min": [
+        0.024301454424858093,
+        0.016620691865682602
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 1728,
+      "componentType": 5125,
+      "count": 3258,
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 121,
+      "max": [
+        2.5
+      ],
+      "min": [
+        0.0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 5,
+      "componentType": 5126,
+      "count": 121,
+      "max": [
+        8.146031404976384e-08,
+        1.0,
+        6.877919389580711e-08,
+        1.0
+      ],
+      "min": [
+        -4.0730135708599846e-08,
+        -0.8443277478218079,
+        -8.146031404976384e-08,
+        -0.5
+      ],
+      "type": "VEC4"
+    }
+  ],
+  "animations": [
+    {
+      "channels": [
+        {
+          "sampler": 0,
+          "target": {
+            "node": 4,
+            "path": "rotation"
+          }
+        }
+      ],
+      "name": "antene|anteneAction",
+      "samplers": [
+        {
+          "input": 10,
+          "interpolation": "LINEAR",
+          "output": 11
+        }
+      ]
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "Sabri Ayeş (https://sketchfab.com/sabriayes)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/3d-models/rts-radar-tower-8f57ca27d2f24ae1b73986f132edede6",
+      "title": "RTS Radar Tower"
+    },
+    "generator": "Sketchfab-12.68.0",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 14760,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 11760,
+      "byteOffset": 14760,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 35280,
+      "byteOffset": 26520,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 23520,
+      "byteOffset": 61800,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 484,
+      "byteOffset": 85320,
+      "name": "floatBufferViews"
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1936,
+      "byteOffset": 85804,
+      "byteStride": 16,
+      "name": "floatBufferViews"
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 87740,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/antene_baseColor.png"
+    },
+    {
+      "uri": "textures/antene_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/antene_normal.png"
+    },
+    {
+      "uri": "textures/build_baseColor.png"
+    },
+    {
+      "uri": "textures/build_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/build_normal.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "name": "antene",
+      "normalTexture": {
+        "index": 2
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 1
+        }
+      }
+    },
+    {
+      "doubleSided": true,
+      "name": "build",
+      "normalTexture": {
+        "index": 5
+      },
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 3
+        },
+        "metallicRoughnessTexture": {
+          "index": 4
+        },
+        "roughnessFactor": 0.33708079268292684
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "name": "antene_antene_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 3
+          },
+          "indices": 4,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "name": "radar_tower_build_0",
+      "primitives": [
+        {
+          "attributes": {
+            "NORMAL": 6,
+            "POSITION": 5,
+            "TANGENT": 7,
+            "TEXCOORD_0": 8
+          },
+          "indices": 9,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        2.220446049250313e-16,
+        -1.0,
+        0.0,
+        0.0,
+        1.0,
+        2.220446049250313e-16,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "Sketchfab_model"
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0,
+        0.0,
+        0.0,
+        -1.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "name": "d41881aed2fa40e59dfbc48a1b196a48.fbx"
+    },
+    {
+      "children": [
+        3
+      ],
+      "name": "Object_2"
+    },
+    {
+      "children": [
+        4,
+        6
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        5
+      ],
+      "name": "antene",
+      "rotation": [
+        1.6936573032921842e-08,
+        0.9781476259231567,
+        -7.968021975557349e-08,
+        0.2079116553068161
+      ],
+      "scale": [
+        15.750349044799805,
+        15.750349044799805,
+        15.750349044799805
+      ],
+      "translation": [
+        397.03485107421875,
+        850.523681640625,
+        -3.713793992996216
+      ]
+    },
+    {
+      "mesh": 0,
+      "name": "antene_antene_0"
+    },
+    {
+      "children": [
+        7
+      ],
+      "name": "radar_tower",
+      "rotation": [
+        8.146034957690063e-08,
+        0.0,
+        0.0,
+        1.0
+      ],
+      "scale": [
+        15.750349044799805,
+        15.750349044799805,
+        15.750349044799805
+      ]
+    },
+    {
+      "mesh": 1,
+      "name": "radar_tower_build_0"
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Sketchfab_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    },
+    {
+      "sampler": 0,
+      "source": 5
+    }
+  ]
+}
