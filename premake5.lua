@@ -37,9 +37,8 @@ project "RTS3D"
         "GLAD",
         "glm",
 	    "ImGui",
+        "assimp",
     }
-
-    defines {}
 
     filter "configurations:Debug"
         defines { "_DEBUG" }
@@ -54,8 +53,16 @@ project "RTS3D"
         systemversion "latest"
         architecture "x64"
 
+        includedirs {
+            "%{prj.name}/Vendor/assimp/include",
+        }
+
+        libdirs {
+            "%{prj.name}/Vendor/assimp/lib",
+        }
+
         links {
-            "opengl32"
+            "opengl32",
         }
 
         defines {
