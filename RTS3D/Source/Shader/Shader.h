@@ -13,6 +13,6 @@ public:
     Shader(const char* vertexFile, const char* fragmentFile);
 
     GLuint GetId() const { return id; }
-    void Active() const;
+    void Activate() const;
     void Delete() const;
 };

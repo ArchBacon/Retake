@@ -33,7 +33,7 @@ Texture::Texture(const char* image, const GLenum texType, const GLenum slot, con
 void Texture::Apply(const Shader& shader, const char* uniform, const GLuint unit) const
 {
     const GLuint texUni = glGetUniformLocation(id, uniform);
-    shader.Active();
+    shader.Activate();
     glUniform1i(texUni, unit);
 }
 

@@ -28,4 +28,7 @@ public:
     void UpdateMatrix(float FOV, float nearPlane, float farPlane);
     void Matrix(Shader& shader, const char* uniform);
     void Inputs(GLFWwindow* window);
+
+    glm::vec3 GetPosition() const { return position; }
+    glm::vec3 GetOrientation() const { return orientation; }
 };
