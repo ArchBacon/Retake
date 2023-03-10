@@ -157,8 +157,11 @@ int main(int argc, char* argv[])
     glUniform3f(glGetUniformLocation(shaderProgram.GetId(), "lightPos"), lightPos.x, lightPos.y, lightPos.z);
 
     //---------- TEXTURE BEGIN ----------//
-    Texture carTexture("SciFi_Pipes/Sci-fi_Pipes_001_basecolor.jpg", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-    carTexture.Apply(shaderProgram, "tex0", 0);
+    Texture albedo("Wood_Ceiling_Coffers/Wood_Ceiling_Coffers_001_basecolor.jpg", GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
+    albedo.Apply(shaderProgram, "albedoMap", 0);
+    
+    Texture specular("Wood_Ceiling_Coffers/Wood_Ceiling_Coffers_001_metallic.jpg", GL_TEXTURE_2D, 1, GL_RED, GL_UNSIGNED_BYTE);
+    specular.Apply(shaderProgram, "specularMap", 1);
     //---------- TEXTURE END ----------//
     
     Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
@@ -166,17 +169,18 @@ int main(int argc, char* argv[])
     while (!glfwWindowShouldClose(window))
     {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glfwPollEvents();
 
         camera.Inputs(window);
         camera.UpdateMatrix(45.0f, 0.1f, 100.0f);
-        
+
         //---------- RENDER PYRAMID BEGIN ----------//
         shaderProgram.Activate();
         glUniform3f(glGetUniformLocation(shaderProgram.GetId(), "camPos"), camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-        
+
         camera.Matrix(shaderProgram, "camMatrix");
-        carTexture.Bind();
+        albedo.Bind();
+        specular.Bind();
+        
         VAO1.Bind();
         glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
         //---------- RENDER PYRAMID END ----------//
@@ -187,16 +191,22 @@ int main(int argc, char* argv[])
         lightVAO.Bind();
         glDrawElements(GL_TRIANGLES, sizeof(lightIndices) / sizeof(int), GL_UNSIGNED_INT, 0);
         //---------- RENDER LIGHT CUBE END ----------//
-        
+
         glfwSwapBuffers(window);
+        glfwPollEvents();
     }
 
     VAO1.Delete();
     VBO1.Delete();
     EBO1.Delete();
-    carTexture.Delete();
+    albedo.Delete();
+    specular.Delete();
     shaderProgram.Delete();
-    
+    lightVAO.Delete();
+    lightVBO.Delete();
+    lightEBO.Delete();
+    lightShader.Delete();
+
     glfwDestroyWindow(window);
     glfwTerminate();
     return 0;
