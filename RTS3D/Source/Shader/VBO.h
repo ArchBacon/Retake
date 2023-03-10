@@ -1,6 +1,17 @@
 #pragma once
 
+#include <vector>
 #include <glad/glad.h>
+#include "glm/vec2.hpp"
+#include "glm/vec3.hpp"
+
+struct Vertex
+{
+    glm::vec3 position{};
+    glm::vec3 normal{};
+    glm::vec3 color{};
+    glm::vec2 texUV{}; // Texture coordinates
+};
 
 /**
  * @see https://en.wikipedia.org/wiki/Vertex_buffer_object
@@ -12,7 +23,7 @@ class VBO
     GLuint id = -1;
     
 public:
-    VBO(const GLfloat* vertices, GLsizeiptr size);
+    VBO(std::vector<Vertex>& vertices);
 
     void Bind() const;
     void Unbind() const;

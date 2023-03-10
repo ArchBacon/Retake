@@ -1,5 +1,6 @@
 #pragma once
 
+#include <vector>
 #include <glad/glad.h>
 
 /**
@@ -10,7 +11,7 @@ class EBO
     GLuint id = -1;
     
 public:
-    EBO(const GLuint* indices, GLsizeiptr size);
+    EBO(std::vector<GLuint>& indices);
 
     void Bind() const;
     void Unbind() const;

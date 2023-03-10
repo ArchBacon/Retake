@@ -3,12 +3,10 @@
 #include <GLFW/glfw3.h>
 
 #include "Camera/Camera.h"
-#include "glm/glm.hpp"
 #include "glm/ext/matrix_transform.hpp"
-#include "glm/gtc/type_ptr.inl"
-#include "Shader/EBO.h"
+#include "glm/gtc/type_ptr.hpp"
+#include "Model/Mesh.h"
 #include "Shader/Shader.h"
-#include "Shader/VAO.h"
 #include "Shader/VBO.h"
 #include "Texture/Texture.h"
 
@@ -21,51 +19,31 @@ int main(int argc, char* argv[])
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Vertices coordinates
-    GLfloat vertices[] =
-    { //     COORDINATES     /        COLORS          /    TexCoord   /        NORMALS       //
-        -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f, 	 0.0f, 0.0f,      0.0f, -1.0f, 0.0f, // Bottom side
-        -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 0.0f, 5.0f,      0.0f, -1.0f, 0.0f, // Bottom side
-         0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 5.0f,      0.0f, -1.0f, 0.0f, // Bottom side
-         0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.0f, -1.0f, 0.0f, // Bottom side
-
-        -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f, 	 0.0f, 0.0f,     -0.8f, 0.5f,  0.0f, // Left Side
-        -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,     -0.8f, 0.5f,  0.0f, // Left Side
-         0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,     -0.8f, 0.5f,  0.0f, // Left Side
-
-        -0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.0f, 0.5f, -0.8f, // Non-facing side
-         0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 0.0f, 0.0f,      0.0f, 0.5f, -0.8f, // Non-facing side
-         0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,      0.0f, 0.5f, -0.8f, // Non-facing side
-
-         0.5f, 0.0f, -0.5f,     0.83f, 0.70f, 0.44f,	 0.0f, 0.0f,      0.8f, 0.5f,  0.0f, // Right side
-         0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.8f, 0.5f,  0.0f, // Right side
-         0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,      0.8f, 0.5f,  0.0f, // Right side
-
-         0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f,	 5.0f, 0.0f,      0.0f, 0.5f,  0.8f, // Facing side
-        -0.5f, 0.0f,  0.5f,     0.83f, 0.70f, 0.44f, 	 0.0f, 0.0f,      0.0f, 0.5f,  0.8f, // Facing side
-         0.0f, 0.8f,  0.0f,     0.92f, 0.86f, 0.76f,	 2.5f, 5.0f,      0.0f, 0.5f,  0.8f  // Facing side
+    Vertex vertices[] =
+    { //               COORDINATES           /            COLORS          /           NORMALS         /       TEXTURE COORDINATES    //
+        Vertex{glm::vec3(-1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 0.0f)},
+        Vertex{glm::vec3(-1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(0.0f, 1.0f)},
+        Vertex{glm::vec3( 1.0f, 0.0f, -1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 1.0f)},
+        Vertex{glm::vec3( 1.0f, 0.0f,  1.0f), glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec2(1.0f, 0.0f)}
     };
 
     // Indices for vertices order
     GLuint indices[] =
     {
-        0, 1, 2, // Bottom side
-        0, 2, 3, // Bottom side
-        4, 6, 5, // Left side
-        7, 9, 8, // Non-facing side
-        10, 12, 11, // Right side
-        13, 15, 14 // Facing side
+        0, 1, 2,
+        0, 2, 3
     };
 
-    GLfloat lightVertices[] =
+    Vertex lightVertices[] =
     { //     COORDINATES     //
-        -0.1f, -0.1f,  0.1f,
-        -0.1f, -0.1f, -0.1f,
-         0.1f, -0.1f, -0.1f,
-         0.1f, -0.1f,  0.1f,
-        -0.1f,  0.1f,  0.1f,
-        -0.1f,  0.1f, -0.1f,
-         0.1f,  0.1f, -0.1f,
-         0.1f,  0.1f,  0.1f
+        Vertex{glm::vec3(-0.1f, -0.1f,  0.1f)},
+        Vertex{glm::vec3(-0.1f, -0.1f, -0.1f)},
+        Vertex{glm::vec3(0.1f, -0.1f, -0.1f)},
+        Vertex{glm::vec3(0.1f, -0.1f,  0.1f)},
+        Vertex{glm::vec3(-0.1f,  0.1f,  0.1f)},
+        Vertex{glm::vec3(-0.1f,  0.1f, -0.1f)},
+        Vertex{glm::vec3(0.1f,  0.1f, -0.1f)},
+        Vertex{glm::vec3(0.1f,  0.1f,  0.1f)}
     };
 
     GLuint lightIndices[] =
@@ -93,50 +71,37 @@ int main(int argc, char* argv[])
         return -1;
     }
     glfwMakeContextCurrent(window);
-    glfwSwapInterval(1); // Enable vsync
+    // glfwSwapInterval(1); // Enable vsync
     gladLoadGL();
     glViewport(0, 0, width, height);
     glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
     glEnable(GL_DEPTH_TEST);
 
+    //---------- TEXTURE BEGIN ----------//
+    Texture textures[] =
+    {
+        Texture("Wood_Ceiling_Coffers/Wood_Ceiling_Coffers_001_basecolor.jpg", "diffuse", 0, GL_RGBA, GL_UNSIGNED_BYTE),
+        Texture("Wood_Ceiling_Coffers/Wood_Ceiling_Coffers_001_metallic.jpg", "specular", 1, GL_RED, GL_UNSIGNED_BYTE),
+    };
+    //---------- TEXTURE END ----------//
+
     //---------- SHADERS BEGIN ----------//
     Shader shaderProgram("default.vert", "default.frag");
     //---------- SHADERS END ----------//
 
-    //---------- PYRAMID BEGIN ----------//
-    VAO VAO1;
-    VAO1.Bind();
-
-    VBO VBO1(vertices, sizeof vertices);
-    EBO EBO1(indices, sizeof indices);
-
-    /** Define Vertices position */
-    VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 11 * sizeof(float), (void*)0);
-    /** Define Vertices color */
-    VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 11 * sizeof(float), (void*)(3 * sizeof(float)));
-    /** Define Vertices texture coordinates */
-    VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 11 * sizeof(float), (void*)(6 * sizeof(float)));
-    VAO1.LinkAttrib(VBO1, 3, 3, GL_FLOAT, 11 * sizeof(float), (void*)(8 * sizeof(float)));
-    VAO1.Unbind();
-    VBO1.Unbind();
-    EBO1.Unbind();
-    //---------- PYRAMID END ----------//
+    //---------- FLOOR BEGIN ----------//
+    std::vector<Vertex> verts(vertices, vertices + sizeof(vertices) / sizeof(Vertex));
+    std::vector<GLuint> ind(indices, indices + sizeof(indices) / sizeof(GLuint));
+    std::vector<Texture> tex(textures, textures + sizeof(textures) / sizeof(Texture));
+    Mesh floor(verts, ind, tex);
+    //---------- FLOOR END ----------//
 
     //---------- LIGHT CUBE BEGIN ----------//
     Shader lightShader("light.vert", "light.frag");
     
-    VAO lightVAO;
-    lightVAO.Bind();
-    // Generates Vertex Buffer Object and links it to vertices
-    VBO lightVBO(lightVertices, sizeof(lightVertices));
-    // Generates Element Buffer Object and links it to indices
-    EBO lightEBO(lightIndices, sizeof(lightIndices));
-    // Links VBO attributes such as coordinates and colors to VAO
-    lightVAO.LinkAttrib(lightVBO, 0, 3, GL_FLOAT, 3 * sizeof(float), (void*)0);
-    // Unbind all to prevent accidentally modifying them
-    lightVAO.Unbind();
-    lightVBO.Unbind();
-    lightEBO.Unbind();
+    std::vector<Vertex> lightVerts(lightVertices, lightVertices + sizeof(lightVertices) / sizeof(Vertex));
+    std::vector<GLuint> lightInd(lightIndices, lightIndices + sizeof(lightIndices) / sizeof(GLuint));
+    Mesh light(lightVerts, lightInd, tex);
     //---------- LIGHT CUBE END ----------//
 
     glm::vec4 lightColor = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f);
@@ -155,14 +120,6 @@ int main(int argc, char* argv[])
     glUniformMatrix4fv(glGetUniformLocation(shaderProgram.GetId(), "model"), 1, GL_FALSE, glm::value_ptr(pyramidModel));
     glUniform4f(glGetUniformLocation(shaderProgram.GetId(), "lightColor"), lightColor.x, lightColor.y, lightColor.z, lightColor.w);
     glUniform3f(glGetUniformLocation(shaderProgram.GetId(), "lightPos"), lightPos.x, lightPos.y, lightPos.z);
-
-    //---------- TEXTURE BEGIN ----------//
-    Texture albedo("Wood_Ceiling_Coffers/Wood_Ceiling_Coffers_001_basecolor.jpg", GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE);
-    albedo.Apply(shaderProgram, "albedoMap", 0);
-    
-    Texture specular("Wood_Ceiling_Coffers/Wood_Ceiling_Coffers_001_metallic.jpg", GL_TEXTURE_2D, 1, GL_RED, GL_UNSIGNED_BYTE);
-    specular.Apply(shaderProgram, "specularMap", 1);
-    //---------- TEXTURE END ----------//
     
     Camera camera(width, height, glm::vec3(0.0f, 0.0f, 2.0f));
     
@@ -173,38 +130,14 @@ int main(int argc, char* argv[])
         camera.Inputs(window);
         camera.UpdateMatrix(45.0f, 0.1f, 100.0f);
 
-        //---------- RENDER PYRAMID BEGIN ----------//
-        shaderProgram.Activate();
-        glUniform3f(glGetUniformLocation(shaderProgram.GetId(), "camPos"), camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
-
-        camera.Matrix(shaderProgram, "camMatrix");
-        albedo.Bind();
-        specular.Bind();
-        
-        VAO1.Bind();
-        glDrawElements(GL_TRIANGLES, sizeof(indices) / sizeof(int), GL_UNSIGNED_INT, 0);
-        //---------- RENDER PYRAMID END ----------//
-
-        //---------- RENDER LIGHT CUBE BEGIN ----------//
-        lightShader.Activate();
-        camera.Matrix(lightShader, "camMatrix");
-        lightVAO.Bind();
-        glDrawElements(GL_TRIANGLES, sizeof(lightIndices) / sizeof(int), GL_UNSIGNED_INT, 0);
-        //---------- RENDER LIGHT CUBE END ----------//
+        floor.Draw(shaderProgram, camera);
+        light.Draw(lightShader, camera);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-
-    VAO1.Delete();
-    VBO1.Delete();
-    EBO1.Delete();
-    albedo.Delete();
-    specular.Delete();
+    
     shaderProgram.Delete();
-    lightVAO.Delete();
-    lightVBO.Delete();
-    lightEBO.Delete();
     lightShader.Delete();
 
     glfwDestroyWindow(window);
